@@ -34,13 +34,14 @@
                     </button>
 
 
-
-                    <button th:if="${#lists.isEmpty(list.children)}" th:data-has-child="${!#lists.isEmpty(list.children)}"
+                    <button th:if="${#lists.isEmpty(list.children)}"
+                            th:data-has-child="${!#lists.isEmpty(list.children)}"
                             th:onclick="|requestQuery(${list.id})|"
                             class="hasChild ml-auto bg-primary px-2 py-1 rounded text-white transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
                         세부과제 생성
                     </button>
-                    <a th:unless="${#lists.isEmpty(list.children)}" th:href="@{|/subject/${list.id}|}" th:data-has-child="${!#lists.isEmpty(list.children)}"
+                    <a th:unless="${#lists.isEmpty(list.children)}" th:href="@{|/subject/${list.id}|}"
+                       th:data-has-child="${!#lists.isEmpty(list.children)}"
                        class="hasChild ml-auto bg-primary-content px-2 py-1 rounded transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
                         세부과제 보기
                     </a>
@@ -52,14 +53,16 @@
                     description for Example Task.
                 </div>
                 <div class="flex items-center bg-base-300 rounded-full my-1 px-1 py-1 w-1/5">
-                    <label class="text-sm text-base-content px-1 mr-2 w-[50%]" >예상일</label>
-                    <input th:if="${list.expiredDate>0}" type="text" class="listExpired text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
+                    <label class="text-sm text-base-content px-1 mr-2 w-[50%]">예상일</label>
+                    <input th:if="${list.expiredDate>0}" type="text"
+                           class="listExpired text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
                            th:placeholder="${list.expiredDate}" th:value="${list.expiredDate}">
-                    <input th:unless="${list.expiredDate>0}" type="text" class="listExpired text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
+                    <input th:unless="${list.expiredDate>0}" type="text"
+                           class="listExpired text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
                            placeholder="미정" th:value="${list.expiredDate}">
                 </div>
             </div>
-            <input type="hidden"  class="listId" th:value="${list.id}">
+            <input type="hidden" class="listId" th:value="${list.id}">
         </li>
     </ul>
 </th:block>
