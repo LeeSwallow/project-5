@@ -35,13 +35,13 @@
 
 
 
-                    <button th:if="${#lists.isEmpty(list.children)}"
+                    <button th:if="${#lists.isEmpty(list.children)}" th:data-has-child="${!#lists.isEmpty(list.children)}"
                             th:onclick="|requestQuery(${list.id})|"
-                            class="ml-auto bg-primary px-2 py-1 rounded text-white transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
+                            class="hasChild ml-auto bg-primary px-2 py-1 rounded text-white transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
                         세부과제 생성
                     </button>
-                    <a th:unless="${#lists.isEmpty(list.children)}" th:href="@{|/subject/${list.id}|}"
-                       class="ml-auto bg-primary-content px-2 py-1 rounded transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
+                    <a th:unless="${#lists.isEmpty(list.children)}" th:href="@{|/subject/${list.id}|}" th:data-has-child="${!#lists.isEmpty(list.children)}"
+                       class="hasChild ml-auto bg-primary-content px-2 py-1 rounded transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
                         세부과제 보기
                     </a>
                 </div>

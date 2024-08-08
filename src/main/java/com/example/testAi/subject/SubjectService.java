@@ -262,4 +262,29 @@ public class SubjectService {
         }
         return false;
     }
+
+    void modify (Long id, Integer expiredDate ,Integer priority) {
+        if (request.isLogin()) {
+            Subject subject = get(id).orElse(null);
+            if (subject != null) {
+                subject.setExpiredDate(expiredDate);
+                subject.setPriority(priority);
+                subjectRepository.save(subject);
+            }
+        }
+    }
+
+    void setParentExpiredDate(Long pid, Integer totalExpiredDate) {
+        if (request.isLogin()) {
+            Subject parent = get(pid).orElse(null);
+            if (parent != null) {
+                Integer diff = totalExpiredDate - parent.getExpiredDate();
+                while (parent != null) {
+                    parent.setExpiredDate(parent.getExpiredDate() + diff);
+                    subjectRepository.save(parent);
+                    parent = parent.getParent();
+                }
+            }
+        }
+    }
 }

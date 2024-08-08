@@ -1,5 +1,35 @@
 taskList = {'tasks' : []};
 
+document.addEventListener('DOMContentLoaded', function() {
+    const listExpiredInputs = document.querySelectorAll('.listExpired');
+
+    listExpiredInputs.forEach(input => {
+        const originalValue = input.value;
+
+        input.addEventListener('change', function() {
+            modifyButton = document.getElementById('modifyButton');
+            modifyButton.classList.remove('hidden');
+            modfiyButton.classList.remove("opacity-0");
+            modfiyButton.classList.add("opacity-100");
+
+            const hasChild = input.closest('li').getAttribute('data-has-child') === 'true';
+            const value = parseInt(input.value, 10);
+            if (hasChild) {
+                alert('세부목표가 있는 목표는 기한을 설정할 수 없습니다.');
+                input.value = originalValue;
+
+            } else if (isNaN(value)){
+                alert('숫자를 입력해주세요.');
+                input.value = originalValue;
+
+            } else if (value < 1 || value > 365) {
+                alert('1일부터 365일 사이의 숫자를 입력해주세요.');
+                input.value = originalValue;
+            }
+        });
+    });
+});
+
 function toggleTask(checkbox) {
     var span = checkbox.nextElementSibling;
     var fullList = checkbox.parentElement.parentElement.parentElement;
@@ -111,6 +141,27 @@ function onChangeSort() {
 
 function toggleFavorite(star) {
     star.classList.toggle('text-yellow-500');
+}
 
 
+function onModify() {
+    const taskListItems = document.querySelectorAll('#taskList li');
+    const taskData = {"tasks": []};
+
+    taskListItems.forEach((item, index) => {
+        const listId = item.querySelector('.listId').value;
+        const expiredDateInput = item.querySelector('.listExpired');
+        const expiredDate = expiredDateInput ? expiredDateInput.value : null;
+        const priority = index + 1; // Assign priority based on the order
+
+        taskData['tasks'].push({
+            listId: listId,
+            expiredDate: expiredDate,
+            priority: priority
+        });
+    });
+
+    const modifyForm = document.getElementById('modifyForm');
+    modifyForm.elements['body'].value = JSON.stringify(taskData);
+    modifyForm.submit();
 }

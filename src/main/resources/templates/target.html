@@ -30,7 +30,14 @@
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold"> ✅ Todo List : <span th:text="${target.subject}"></span></h1>
             <div class="flex items-center">
-                <button class="bg-success text-white ml-4 px-2 py-1 rounded mr-2 text-l flex items-center"
+
+                <button class="bg-primary text-white ml-4 px-2 py-1 rounded mr-2 text-l flex items-center hover:bg-primary-content click:scale-105 hidden  transition-opacity duration-2000 opacity-0"
+                        id = "modifyButton"
+                        onclick="onModify()">
+                    수정 적용
+                </button>
+
+                <button class="bg-success text-white ml-2 px-2 py-1 rounded mr-2 text-l flex items-center hover:bg-success-content click:scale-105"
                         onclick="onDone()">
                     체크 완료
                 </button>
@@ -71,7 +78,7 @@
         <input type="hidden" name="body">
     </form>
 
-    <form action="modifyForm" th:action="@{|/subject/${target.id}/modify|}" method="post" class="hidden">
+    <form id="modifyForm" th:action="@{|/subject/${target.id}/modify|}" method="post" class="hidden">
         <input type="hidden" name="body">
     </form>
 

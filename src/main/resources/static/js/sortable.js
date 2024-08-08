@@ -3,6 +3,10 @@ $(function() {
 
     taskList.sortable({
         update: function(event, ui) {
+            modfiyButton = document.getElementById("modifyButton");
+            modifyButton.classList.remove("hidden");
+            modfiyButton.classList.remove("opacity-0");
+            modfiyButton.classList.add("opacity-100");
             printOrder();
         }
     });

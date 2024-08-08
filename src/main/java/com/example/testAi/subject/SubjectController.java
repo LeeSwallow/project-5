@@ -249,6 +249,26 @@ public class SubjectController {
         return "redirect:/subject/main";
     }
 
+    @PostMapping("{sid}/modify")
+    public String modifyTargetSubject(@RequestParam("body") String body, @PathVariable Long sid) {
+
+        JSONObject jsonObject = new JSONObject(body);
+        List<Map<String, Object>> tasks = jsonObject.getJSONArray("tasks").toList().stream()
+                .map(task -> (Map<String, Object>) task)
+                .collect(Collectors.toList());
+
+        Integer totalExpiredDate = 0;
+        for (Map<String, Object> task : tasks) {
+            Long listId = Long.parseLong(task.get("listId").toString());
+            Integer expiredDate = Integer.parseInt(task.get("expiredDate").toString());
+            Integer priority = Integer.parseInt(task.get("priority").toString());
+            totalExpiredDate += expiredDate;
+            subjectService.modify(listId, expiredDate, priority);
+        }
+        subjectService.setParentExpiredDate(sid, totalExpiredDate);
+        return String.format("redirect:/subject/%d", sid);
+    }
+
 
     @GetMapping("/main/favorite/{subjectId}")
     @ResponseBody
