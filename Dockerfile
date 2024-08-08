@@ -1,27 +1,11 @@
-# Use the official OpenJDK image from the Docker Hub
+# 베이스 이미지 설정 (예: OpenJDK 21)
 FROM openjdk:21-jdk-slim
 
-# Set the working directory inside the container
-WORKDIR /app
+# 작업 디렉토리 설정
+WORKDIR /home/min/WorkSpace/copies/project_TEAM5-2
 
-# Copy the Gradle wrapper and project files
-COPY gradlew .
-COPY gradle gradle
-COPY build.gradle .
-COPY settings.gradle .
-COPY src src
+# JAR 파일을 이미지에 복사
+COPY build/libs/testAi-0.0.1-SNAPSHOT.jar testApp-0.0.1-SNAPSHOT.jar
 
-# Grant execution rights to the Gradle wrapper
-RUN chmod +x gradlew
-
-# Build the application
-RUN ./gradlew build
-
-# Copy the built application to the Docker image
-COPY build/libs/*.jar app.jar
-
-# Expose the port the application runs on
-EXPOSE 8080
-
-# Set the entry point to run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# 애플리케이션 실행 명령어
+ENTRYPOINT ["java", "-jar", "testApp-0.0.1-SNAPSHOT.jar"]
