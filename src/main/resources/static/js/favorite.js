@@ -21,16 +21,25 @@ function requestQueryFavorite(obj,subject_id){
     })
 
         .done(function (json){
-            if (json=="true"){
-                $(obj).addClass("favorite_on");
-            } else {
-                $(obj).removeClass('favorite_on');
-            }
-
+            toggleFavorite(obj);
         })
 
         .fail(function (xhr, status, errorThrown){
             alert("Ajax failed")
         })
 
+}
+
+function toggleFavorite(button) {
+    if (button.value === "true") {
+        // Change to not favorite
+        button.classList.remove("bg-yellow-400", "text-white", "border", "border-yellow-400", "hover:bg-transparent", "hover:text-yellow-400");
+        button.classList.add("bg-white", "text-yellow-400", "border", "border-yellow-400", "hover:bg-yellow-400", "hover:text-white");
+        button.value = "false";
+    } else {
+        // Change to favorite
+        button.classList.remove("bg-white", "text-yellow-400", "border", "border-yellow-400", "hover:bg-yellow-400", "hover:text-white");
+        button.classList.add("bg-yellow-400", "text-white", "border", "border-yellow-400", "hover:bg-transparent", "hover:text-yellow-400");
+        button.value = "true";
+    }
 }

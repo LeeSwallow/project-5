@@ -16,11 +16,25 @@
                 </div>
                 <div>
                     <button type="button"
-                            class="text-yellow-700 border border-yellow-700 hover:bg-yellow-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-yellow-500 dark:text-yellow-500 dark:hover:text-white dark:focus:ring-yellow-800 dark:hover:bg-yellow-500"
-                            th:onclick="|requestQueryFavorite(this, ${list.id})|">
+                            th:unless="${list.isFavorite}"
+                            class="text-yellow-400 border border-yellow-400 hover:bg-yellow-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+                            th:onclick="|requestQueryFavorite(this,${list.id})|"
+                            value="false">
                         <i class="fas fa-star"></i>
                         <span class="sr-only">즐겨찾기</span>
                     </button>
+
+                    <button type="button"
+                            th:if="${list.isFavorite}"
+                            class="bg-yellow-400 text-white border border-yellow-400 hover:bg-transparent hover:text-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+                            th:onclick="|requestQueryFavorite(this,${list.id})|"
+                            value="true">
+                        <i class="fas fa-star"></i>
+                        <span class="sr-only">즐겨찾기 완료</span>
+                    </button>
+
+
+
                     <button th:if="${#lists.isEmpty(list.children)}"
                             th:onclick="|requestQuery(${list.id})|"
                             class="ml-auto bg-primary px-2 py-1 rounded text-white transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
