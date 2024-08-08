@@ -220,7 +220,10 @@ public class SubjectService {
     void done(Long id) {
         if (request.isLogin()) {
             Subject subject = get(id).orElse(null);
+
             if (subject != null && !subject.isDone()) {
+                subject.setDone(true);
+                subjectRepository.save(subject);
                 Subject parent = subject;
                 int expDate = subject.getExpiredDate();
                 while (parent != null) {
@@ -228,10 +231,8 @@ public class SubjectService {
                     subjectRepository.save(parent);
                     parent = parent.getParent();
                 }
+                doneChlidren(subject);
             }
-            subject.setDone(true);
-            subjectRepository.save(subject);
-            doneChlidren(subject);
         }
     }
     private void doneChlidren(Subject subject) {

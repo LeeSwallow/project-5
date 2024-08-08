@@ -20,9 +20,9 @@ public class SubjectController {
 
     @GetMapping("main")
     public String getAllSubjects(Model model,
-         @RequestParam(value = "taskSort", required = false, defaultValue = "recent") String taskSort) {
-        if (!subjectFormScope.getPrevStep().equals(ControllerStep.DIVIDE)){
-                subjectFormScope.clear();
+                                 @RequestParam(value = "taskSort", required = false, defaultValue = "recent") String taskSort) {
+        if (!subjectFormScope.getPrevStep().equals(ControllerStep.DIVIDE)) {
+            subjectFormScope.clear();
             subjectFormScope.setPrevStep(ControllerStep.START);
         } else {
             subjectFormScope.setPrevStep(ControllerStep.CHECK);
@@ -36,9 +36,9 @@ public class SubjectController {
         // taskSort에 따라 다르게 처리
         if (taskSort.equals("recent")) {
             model.addAttribute("subjects", subjectService.getAll());
-        } else if(taskSort.equals("favorite")) {
+        } else if (taskSort.equals("favorite")) {
             model.addAttribute("subjects", subjectService.getFavorite());
-        } else if(taskSort.equals("tree")) {
+        } else if (taskSort.equals("tree")) {
             model.addAttribute("subjects", subjectService.getRoots());
         } else {
             model.addAttribute("subjects", subjectService.getDone());
@@ -69,9 +69,9 @@ public class SubjectController {
     @PostMapping("main/save")
     public String saveSubjects(@RequestParam("body") String body) {
         if (!subjectFormScope.getPrevStep().equals(ControllerStep.CHECK)) {
-           subjectFormScope.clear();
-           subjectFormScope.setPrevStep(ControllerStep.NONE);
-           return "redirect:/subject/main";
+            subjectFormScope.clear();
+            subjectFormScope.setPrevStep(ControllerStep.NONE);
+            return "redirect:/subject/main";
         } else {
             subjectFormScope.setPrevStep(ControllerStep.SAVE);
         }
@@ -118,11 +118,9 @@ public class SubjectController {
     }
 
 
-
-
     @GetMapping("/{sid}")
     public String getTargetSubjects(Model model, @PathVariable Long sid) {
-        if (!subjectFormScope.getPrevStep().equals(ControllerStep.DIVIDE)){
+        if (!subjectFormScope.getPrevStep().equals(ControllerStep.DIVIDE)) {
             subjectFormScope.clear();
             subjectFormScope.setPrevStep(ControllerStep.START);
         } else {
@@ -135,8 +133,10 @@ public class SubjectController {
         if (target == null) {
             return "redirect:/subject/main";
         }
-        List<Subject> subjects = target.children;
-        subjects.sort(Comparator.comparing(Subject::getPriority));
+        List<Subject> subjects = target.getChildren().stream()
+                .filter(subject -> !subject.isDone())
+                .sorted(Comparator.comparing(Subject::getPriority))
+                .collect(Collectors.toList());
 
         model.addAttribute("requestedId", requestedId);
         model.addAttribute("subjectForms", subjectForms);
@@ -194,31 +194,31 @@ public class SubjectController {
         return String.format("redirect:/subject/%d", sid);
     }
 
-
-    @PostMapping("{sid}/delete")
-    public String deleteTargetSubject(@RequestParam("body") String body, @PathVariable Long sid) {
-        JSONObject jsonObject = new JSONObject(body);
-
-        List<Long> idList = jsonObject.getJSONArray("tasks").toList().stream()
-                .map(Objects::toString).map(Long::parseLong).toList();
-
-        Subject target = subjectService.get(sid).orElse(null);
-        Subject parent = (target == null) ? null : target.getParent();
-
-        idList.forEach(subjectService::delete);
-
-        if (subjectService.get(sid).isPresent()) {
-            if (subjectService.get(sid).get().getChildren().isEmpty())
-                subjectService.delete(sid);
-            else
-                return String.format("redirect:/subject/%d", sid);
-        }
-        if (parent != null) {
-            return String.format("redirect:/subject/%d", parent.getId());
-        }
-        return "redirect:/subject/main";
-    }
-
+//
+//    @PostMapping("{sid}/delete")
+//    public String deleteTargetSubject(@RequestParam("body") String body, @PathVariable Long sid) {
+//        JSONObject jsonObject = new JSONObject(body);
+//
+//        List<Long> idList = jsonObject.getJSONArray("tasks").toList().stream()
+//                .map(Objects::toString).map(Long::parseLong).toList();
+//
+//        Subject target = subjectService.get(sid).orElse(null);
+//        Subject parent = (target == null) ? null : target.getParent();
+//
+//        idList.forEach(subjectService::delete);
+//
+//        if (subjectService.get(sid).isPresent()) {
+//            if (subjectService.get(sid).get().getChildren().isEmpty())
+//                subjectService.delete(sid);
+//            else
+//                return String.format("redirect:/subject/%d", sid);
+//        }
+//        if (parent != null) {
+//            return String.format("redirect:/subject/%d", parent.getId());
+//        }
+//        return "redirect:/subject/main";
+//    }
+//
 
     @PostMapping("{sid}/done")
     public String doneTargetSubject(@RequestParam("body") String body, @PathVariable Long sid) {
@@ -230,19 +230,25 @@ public class SubjectController {
         Subject target = subjectService.get(sid).orElse(null);
         Subject parent = (target == null) ? null : target.getParent();
 
-        idList.forEach(subjectService::delete);
-
-        if (subjectService.get(sid).isPresent()) {
-            if (subjectService.get(sid).get().getChildren().isEmpty())
-                subjectService.delete(sid);
-            else
-                return String.format("redirect:/subject/%d", sid);
+        for (Long id : idList) {
+            subjectService.done(id);
         }
-        if (parent != null) {
-            return String.format("redirect:/subject/%d", parent.getId());
+
+
+        if (target != null) {
+            for (Subject child : target.getChildren()) {
+                if (!child.isDone()) {
+                    return String.format("redirect:/subject/%d", sid);
+                }
+            }
+            subjectService.done(sid);
+            if (parent != null) {
+                return String.format("redirect:/subject/%d", parent.getId());
+            }
         }
         return "redirect:/subject/main";
     }
+
 
     @GetMapping("/main/favorite/{subjectId}")
     @ResponseBody
