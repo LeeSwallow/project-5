@@ -19,10 +19,6 @@
                     ➕ 회원가입
                 </a>
 
-                <a th:if="${@rq.login}" href="/member/me" class="hover:text-gray-200 flex items-center p-1 transition duration-300 ease-in-out transform hover:scale-105 font-bold">
-                    👨‍🦱 내 정보
-                </a>
-
                 <a th:if="${@rq.login}"  href="/member/logout" class="hover:text-gray-200 flex items-center p-1 transition duration-300 ease-in-out transform hover:scale-105 font-bold">
                     ➕ 로그아웃
                 </a>
