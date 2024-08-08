@@ -9,12 +9,26 @@
                         <input class="mr-2" type="checkbox" onchange="toggleTask(this)">
                         <span class="font-bold" th:text="${list.subject}">Example Task</span>
                     </div>
+
                     <div>
                         <button type="button"
-                                class="text-yellow-700 border border-yellow-700 hover:bg-yellow-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-yellow-500 dark:text-yellow-500 dark:hover:text-white dark:focus:ring-yellow-800 dark:hover:bg-yellow-500">
+                                th:unless="${list.isFavorite}"
+                                class="text-yellow-400 border border-yellow-400 hover:bg-yellow-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+                                th:onclick="|requestQueryFavorite(this,${list.id})|"
+                                value="false">
                             <i class="fas fa-star"></i>
                             <span class="sr-only">즐겨찾기</span>
                         </button>
+
+                        <button type="button"
+                                th:if="${list.isFavorite}"
+                                class="bg-yellow-400 text-white border border-yellow-400 hover:bg-transparent hover:text-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+                                th:onclick="|requestQueryFavorite(this,${list.id})|"
+                                value="true">
+                            <i class="fas fa-star"></i>
+                            <span class="sr-only">즐겨찾기 완료</span>
+                        </button>
+
                         <button th:if="${#lists.isEmpty(list.children)}"
                                 th:onclick="|requestQuery(${list.id})|"
                                 class="ml-auto bg-primary px-2 py-1 rounded text-white transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
@@ -33,9 +47,11 @@
                         description for Example Task.
                     </div>
                     <div class="flex items-center bg-gray-200 rounded-full my-1 px-1 py-1 w-1/5">
-                        <label for="expectInput" class="text-sm text-gray-500 px-1 mr-1 w-[50%]" >예상일</label>
-                        <input th:if="${list.expiredDate>0}"  id="expectInput" type="text" class="text-sm text-gray-500 bg-gray-200 w-[50%] rounded-full  py-1 text-right" th:placeholder="${list.expiredDate}">
-                        <input th:unless="${list.expiredDate>0}"  id="expectInput" type="text" class="text-sm text-gray-500 bg-gray-200 w-[50%] rounded-full py-1 text-right" placeholder="미정">
+                        <label class="text-sm text-base-content px-1 mr-2 w-[50%]" >예상일</label>
+                        <input th:if="${list.expiredDate>0}" type="text" class="expectInput text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
+                               th:placeholder="${list.expiredDate}" th:value="${list.expiredDate}" disabled>
+                        <input th:unless="${list.expiredDate>0}" type="text" class="expectInput text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
+                               placeholder="미정" th:value="${list.expiredDate}" disabled>
                     </div>
                 </div>
                 <input type="hidden" th:value="${list.id}">

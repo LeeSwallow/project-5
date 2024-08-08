@@ -4,7 +4,9 @@
 
 
 <th:block layout:fragment="head">
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script th:src="@{/js/popup.js}"></script>
     <script th:src="@{/js/todo.js}"></script>
     <script th:src="@{/js/sortable.js}"></script>
@@ -44,7 +46,7 @@
             <input id="taskInput" type="text" class="flex-1 p-4 border rounded-l-full" placeholder="할 일 추가하기"
                    name="taskInput">
             <a href="javascript:void(0);" onclick="addTask()"
-                    class="bg-primary text-white px-4 py-4 rounded-r-full transition duration-1000 ease-in-out hover:bg-primary-content text-lg">
+               class="bg-primary text-white px-4 py-4 rounded-r-full transition duration-1000 ease-in-out hover:bg-primary-content text-lg">
                 추가
             </a>
 
@@ -65,9 +67,14 @@
         <input type="hidden" name="body">
     </form>
 
-    <form id="doneForm" th:action="@{/subject/main/done}" method="post" class="hidden">
+    <form id="doneForm" th:action="@{|/subject/${target.id}/done|}" method="post" class="hidden">
         <input type="hidden" name="body">
     </form>
+
+    <form action="modifyForm" th:action="@{|/subject/$target.id}/modify|}" method="post" class="hidden">
+        <input type="hidden" name="body">
+    </form>
+
 
 </div>
 </html>

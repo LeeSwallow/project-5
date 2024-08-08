@@ -1,6 +1,5 @@
 taskList = {'tasks' : []};
 
-
 function toggleTask(checkbox) {
     var span = checkbox.nextElementSibling;
     var fullList = checkbox.parentElement.parentElement.parentElement;

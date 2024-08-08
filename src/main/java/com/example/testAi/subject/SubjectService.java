@@ -40,8 +40,15 @@ public class SubjectService {
 
     List<Subject> getAllByPriority() {
         if (request.isLogin()) {
-            return subjectRepository.findAllByMemberId(Sort.by(Sort.Order.asc("priority")), request.getMember().getId())
+            List<Subject> subjects =  subjectRepository.findAllByMemberId(Sort.by(Sort.Order.asc("priority")), request.getMember().getId())
                     .stream().filter(s -> !(s.isDone())).toList();
+            int priority = 1;
+
+            for (Subject subject : subjects) {
+                subject.setPriority(priority++);
+            }
+            subjectRepository.saveAll(subjects);
+            return subjects;
         } else {
             return new ArrayList<>();
         }
@@ -188,6 +195,7 @@ public class SubjectService {
         if (!request.isLogin()) {
             return;
         }
+
         Subject subject = new Subject();
         subject.setSubject(content);
         subject.setDescription("사용자가 직접 입력한 내용입니다.");
@@ -201,6 +209,8 @@ public class SubjectService {
             subject.setParent(parent);
             parent.getChildren().add(subject);
             subject.setDepth(parent.getDepth() + 1);
+            int priority = parent.getChildren().size();
+            subject.setPriority(priority);
             subjectRepository.save(parent);
         }
 
@@ -225,9 +235,9 @@ public class SubjectService {
         }
     }
     private void doneChlidren(Subject subject) {
-        subject.setParent(null);
 
         if (subject.getChildren().isEmpty()) {
+        subject.setParent(null);
             return;
         }
         for (Subject child : subject.getChildren()) {

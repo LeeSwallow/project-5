@@ -8,7 +8,6 @@
     <script th:src="@{/js/popup.js}"></script>
     <script th:src="@{/js/todo.js}"></script>
     <script th:src="@{/js/favorite.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/favorite.css}">
 </th:block>
 
 
@@ -29,6 +28,7 @@
 
             <div class="flex items-center">
 
+
                 <form th:action="@{/subject/main}" id="sortForm" method="get">
                     <select class="bg-gray-300 px-1 py-1 rounded" name="taskSort" onchange="onChangeSort()">
                         <option value="recent"
@@ -44,7 +44,6 @@
                                 th:selected="${param.taskSort != null and param.taskSort[0] == 'done'}">완료된 할 일
                         </option>
                     </select>
-
                 </form>
 
                 <th:block th:if="${param.taskSort == null or param.taskSort[0] != 'done'}">
@@ -60,7 +59,6 @@
                         삭제하기
                     </button>
                 </th:block>
-
             </div>
         </div>
 

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:fragment="basicList">
+<th:block th:fragment="mainList">
     <ul id="taskList" class="list-none p-0">
         <li th:if="${#lists.isEmpty(subjects)}" class="text-center text-base-content">
             😄 모든 할 일을 완료했어요!
         </li>
 
-        <li th:each="list : ${subjects}" th:data-id="${list.id}"
+        <li th:each="list : ${subjects}"
             class="flex flex-col justify-between items-start p-2 bg-gray-100 rounded mb-2 transition duration-1000">
             <div class="taskItem flex justify-between items-center w-full">
                 <div>
@@ -53,13 +53,13 @@
                 </div>
                 <div class="flex items-center bg-base-300 rounded-full my-1 px-1 py-1 w-1/5">
                     <label class="text-sm text-base-content px-1 mr-2 w-[50%]" >예상일</label>
-                    <input th:if="${list.expiredDate>0}" type="text" class="listExpired text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
-                           th:placeholder="${list.expiredDate}" th:value="${list.expiredDate}">
-                    <input th:unless="${list.expiredDate>0}" type="text" class="listExpired text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
-                           placeholder="미정" th:value="${list.expiredDate}">
+                    <input th:if="${list.expiredDate>0}" type="text" class="expectInput text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
+                           th:placeholder="${list.expiredDate}" th:value="${list.expiredDate}" disabled>
+                    <input th:unless="${list.expiredDate>0}" type="text" class="expectInput text-sm text-base-content bg-base-300 w-[50%] rounded-full px-2 py-1 text-right"
+                           placeholder="미정" th:value="${list.expiredDate}" disabled>
                 </div>
             </div>
-            <input type="hidden"  class="listId" th:value="${list.id}">
+            <input type="hidden" th:value="${list.id}">
         </li>
     </ul>
 </th:block>
