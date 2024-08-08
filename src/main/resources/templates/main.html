@@ -7,7 +7,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script th:src="@{/js/popup.js}"></script>
     <script th:src="@{/js/todo.js}"></script>
-    <script th:src="@{/js/favorite.js}"></script>
+    <script th:if="${param.taskSort == null or param.taskSort[0] != 'favorite'}" th:src="@{/js/favorite.js}"></script>
+    <script th:if="${param.taskSort != null and param.taskSort[0] == 'favorite'}" th:src="@{/js/favorite-list.js}"></script>
 </th:block>
 
 
