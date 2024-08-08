@@ -244,12 +244,10 @@ public class SubjectController {
         return "redirect:/subject/main";
     }
 
-//
-//
-//    @GetMapping("{id}/favorite")
-//    public String switchFavorite(@RequestParam("id") Long id) {
-//        subjectService.switchFavorite(id);
-//        return "redirect:/subject/main";
-//    }
-//    @GetMapping()
+    @GetMapping("/main/favorite/{subjectId}")
+    @ResponseBody
+    public String switchFavorite(@PathVariable("subjectId") Long subjectId) {
+        boolean isFavorite = subjectService.switchFavorite(subjectId);
+        return Boolean.toString(isFavorite);
+    }
 }

@@ -238,4 +238,17 @@ public class SubjectService {
         subject.children.clear();
         subjectRepository.save(subject);
     }
+
+
+    boolean switchFavorite(Long id) {
+        if (request.isLogin()) {
+            Subject subject = get(id).orElse(null);
+            if (subject != null) {
+                subject.setFavorite(!subject.isFavorite());
+                subjectRepository.save(subject);
+                return subject.isFavorite();
+            }
+        }
+        return false;
+    }
 }
