@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+<div th:fragment="recentList">
+
+    <ul id="taskList" class="list-none p-0">
+        <!-- 'favorite'일 때 메시지 표시 -->
+        <li th:if="${param.taskSort[0] == 'favorite' && #lists.isEmpty(subjects)}" class="text-center text-gray-500">
+            즐겨찾기가 없어요
+        </li>
+
+        <!-- 'recent'일 때 메시지 표시 -->
+        <li th:if="${param.taskSort[0] == 'recent' && #lists.isEmpty(subjects)}" class="text-center text-gray-500">
+            😄 모든 할 일을 완료했어요!
+        </li>
+
+        <li th:each="subject : ${subjects}" th:if="${param.taskSort[0] == 'recent'}"
+            class="flex flex-col justify-between items-start p-2 bg-gray-100 rounded mb-2 transition duration-1000">
+            <div class="taskItem flex justify-between items-center w-full">
+                <div>
+                    <input class="mr-2" type="checkbox" onchange="toggleTask(this)">
+                    <span class="font-bold" th:text="${subject.subject}">Example T ask</span>
+                </div>
+                <div>
+                    <button type="button" id="favorite_btn"
+                            class="favorite"
+                            th:onclick="|requestQueryFavorite(this,${subject.id})|">
+                        <i class="fas fa-star"></i>
+                        <span class="sr-only">즐겨찾기</span>
+                    </button>
+                    <button th:if="${#lists.isEmpty(subject.children)}"
+                            th:onclick="|requestQuery(${subject.id})|"
+                            class="ml-auto bg-primary px-2 py-1 rounded text-white transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
+                        세부과제 생성
+                    </button>
+
+                    <a th:unless="${#lists.isEmpty(subject.children)}" th:href="@{|/subject/${subject.id}|}"
+                       class="ml-auto bg-primary-content px-2 py-1 rounded transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
+                        세부과제 보기
+                    </a>
+                </div>
+            </div>
+            <div class="description mt-2 text-gray-500 ml-4" th:text="${subject.description}">This is the
+                description for Example Task.
+            </div>
+            <input type="hidden" th:value="${subject.id}">
+        </li>
+
+
+        <li th:each="subject : ${subjects}" th:if="${param.taskSort[0] == 'favorite'}"
+            class="flex flex-col justify-between items-start p-2 bg-gray-100 rounded mb-2 transition duration-1000">
+            <div class="taskItem flex justify-between items-center w-full">
+                <div>
+                    <button type="button" id="favorite_del_btn"
+                            class="favorite"
+                            th:onclick="|requestQueryFavorite(this,${subject.id})|">
+                        <i class="fas fa-trash"></i>
+                        <span class="sr-only">삭제</span>
+                    </button>
+                    <div>
+                        <span class="font-bold" th:text="${subject.subject}">Example Task</span>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="description mt-2 text-gray-500 ml-4" th:text="${subject.description}">This is the
+                description for Example Task.
+            </div>
+            <input type="hidden" th:value="${subject.id}">
+        </li>
+
+    </ul>
+
+</div>
+</html>

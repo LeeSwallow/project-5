@@ -1,0 +1,68 @@
+server:
+  port: 8080
+
+http:
+  encoding:
+    charset: UTF-8
+    enabled: true
+    force: true
+
+spring:
+  profiles:
+    include: secret
+  thymeleaf:
+    cache: false
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:./db_dev;MODE=MySQL  #uri 주소 형식 , local 설치
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  ai:
+    openai:
+      chat:
+        enabled: true
+        model: gpt-3.5-turbo
+
+  jwt:
+    expiration: 86400000
+
+  #kakao start
+  output:
+    ansi:
+      enabled: always
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ba7ccf555f615d265e6effcb2d934aa3
+            scope: profile_nickname, profile_image
+            client-name: Kakao
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            #client-secret: hESCSk9McExrtMqSHbcoPDDiUwsgnH4a # 카카오 로그인 -> 보안 -> Client Secret 코드
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+logging:
+  level:
+    com.ll.sapp: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.orm.jdbc.extract: TRACE
+    org.springframework.transaction.interceptor: TRACE

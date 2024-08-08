@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNU LOAD MAP</title>
+    <link rel="stylesheet" th:href="@{/css/start.css}">
+    <script th:src="@{/js/start.js}"></script>
+</head>
+
+<body>
+<section id="intro">
+    <div class="intro-content">
+        <h1>🚩 Welcome to PNU LOAD MAP!</h1>
+        <p>지금부터 사용방법을 설명해 드릴게요!</p>
+    </div>
+    <div id="toggle-button" class="track">
+        <div class="circle"></div>
+    </div>
+</section>
+<section id="feature1" class="feature">
+<div class="feature-content left">
+    <div class="feature-image">
+        <img th:src="@{/src/feature-image1-desktop.png}" th:data-desktop="@{src/feature-image1-desktop.png}"
+             data-mobile="/src/feature-image1-mobile.png" alt="Feature Image1">
+    </div>
+    <div class="feature-description">
+        <h2> ✅ 우선, 목표를 추가해 볼까요?</h2>
+        <p>추가한 목표를 반영하여 To-Do list를 추천해 드립니다.</p>
+    </div>
+</div>
+</section>
+<section id="feature2" class="feature">
+    <div class="feature-content right">
+        <div class="feature-image">
+            <img th:src="@{src/feature-image1-desktop.png}" th:data-desktop="@{src/feature-image1-desktop.png}"
+                 data-mobile="/src/feature-image1-mobile.png" alt="Feature Image2">
+        </div>
+        <div class="feature-description">
+            <h2>📑 목표에 대한 세부 사항을 추가하세요</h2>
+            <p>To-Do list를 세부 사항으로 나누어 더 명확하게 설정할 수 있습니다.</p>
+        </div>
+    </div>
+</section>
+<section id="feature3" class="feature">
+    <div class="feature-content left">
+        <div class="feature-image">
+            <img th:src="@{src/feature-image1-desktop.png}" th:data-desktop="@{/src/feature-image1-desktop.png}"
+                 data-mobile="/src/feature-image1-mobile.png" alt="Feature Image3">
+        </div>
+        <div class="feature-description">
+            <h2>🕐️ 우선순위를 설정해 보세요</h2>
+            <p>목표의 중요도에 따라 우선순위를 설정할 수 있습니다.</p>
+        </div>
+    </div>
+</section>
+<section id="feature4" class="feature">
+    <div class="feature-content right">
+        <div class="feature-image">
+            <img th:src="@{/src/feature-image1-desktop.png}" th:data-desktop="@{/src/feature-image1-desktop.png}"
+                 data-mobile="/src/feature-image1-mobile.png" alt="Feature Image4">
+        </div>
+        <div class="feature-description">
+            <h2>⭐️ 따로 모아 두세요</h2>
+            <p>To-do list를 즐겨 찾기에 추가할 수 있습니다.</p>
+        </div>
+    </div>
+</section>
+<section id="feature5" class="feature">
+    <div class="feature-content left">
+        <div class="feature-image">
+            <img th:src="@{/src/feature-image1-desktop.png}" th:data-desktop="@{/src/feature-image1-desktop.png}"
+                 data-mobile="/src/feature-image1-mobile.png" alt="Feature Image5">
+        </div>
+        <div class="feature-description">
+            <h2>✍️ 진행 상황을 확인하세요</h2>
+            <p>완료한 목표는 체크 박스에 체크를 하여 지울 수 있습니다.</p>
+        </div>
+    </div>
+</section>
+<section id="final" class="finalSection">
+    <div class="final-content">
+        <h1>이제 시작해 볼까요? 🔥 목표 달성을 빕니다!</h1>
+        <button id="get-started" class="animated-button" onclick="redirect()">Get Started</button>
+    </div>
+</section>
+
+</body>
+</html>s

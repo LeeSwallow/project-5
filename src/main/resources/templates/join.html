@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<head>
+  <style>
+    .btn-kakao {
+      background-color: #ffe812; /* 기본 노란색 배경 */
+      color: #000; /* 기본 검정색 텍스트 */
+    }
+    .btn-kakao:hover, .btn-kakao:focus {
+      background-color: #ffcc00; /* 진한 노란색 배경 */
+    }
+  </style>
+
+</head>
+<div layout:fragment="content">
+  <div class="flex flex-col items-center pt-10 h-screen">
+    <script>
+      function submitJoinForm(form) {
+        form.username.value = form.username.value.trim();
+
+        if ( form.username.value.length == 0 ) {
+          alert("아이디를 입력해주세요.");
+          form.username.focus();
+          return;
+        }
+
+        form.email.value = form.email.value.trim();
+
+        if ( form.email.value.length == 0 ) {
+          alert("이메일을 입력해주세요.");
+          form.email.focus();
+          return;
+        }
+
+        form.nickname.value = form.nickname.value.trim();
+
+        if ( form.nickname.value.length == 0 ) {
+          alert("별명을 입력해주세요.");
+          form.nickname.focus();
+          return;
+        }
+
+        if ( form.password.value.length == 0 ) {
+          alert("비밀번호를 입력해주세요.");
+          form.password.focus();
+          return;
+        }
+
+        if ( form.password.value.length < 4 ) {
+          alert("비밀번호를 4자 이상 입력해주세요.");
+          form.password.focus();
+          return;
+        }
+
+        if ( form.passwordConfirm.value.length == 0 ) {
+          alert("비밀번호 확인을 입력해주세요.");
+          form.passwordConfirm.focus();
+          return;
+        }
+
+        if ( form.password.value != form.passwordConfirm.value ) {
+          alert("비밀번호 확인이 일치하지 않습니다.");
+          form.passwordConfirm.focus();
+          return;
+        }
+
+        form.submit();
+      }
+    </script>
+
+    <div class="max-w-2xl w-full px-4">
+      <h1 class="mb-4">
+        <i class="fa-solid fa-user-plus"></i>
+        회원가입
+      </h1>
+
+      <form th:action method="POST" class="flex flex-col gap-6" onsubmit="submitJoinForm(this); return false;">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">아이디</span>
+          </label>
+          <input name="username" type="text" placeholder="아이디" class="input input-bordered" autofocus/>
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">이메일</span>
+          </label>
+          <input name="email" type="email" placeholder="이메일" class="input input-bordered"/>
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">별명</span>
+          </label>
+          <input name="nickname" type="text" placeholder="별명" class="input input-bordered"/>
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">비밀번호</span>
+          </label>
+          <input name="password" type="password" placeholder="비밀번호" class="input input-bordered"/>
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">비밀번호 확인</span>
+          </label>
+          <input name="passwordConfirm" type="password" placeholder="비밀번호" class="input input-bordered"/>
+        </div>
+
+        <button class="btn btn-block btn-outline gap-1">
+          <i class="fa-solid fa-comment text-[color:#ffe812]"></i>
+          <span>회원가입</span>
+        </button>
+
+        <a href="/oauth2/authorization/kakao" class="btn btn-block btn-outline gap-1 btn-kakao">
+          <i class="fa-solid fa-comment text-[color:#ffe812]"></i>
+          <span>카카오 계정으로 회원가입</span>
+        </a>
+        <a href="/member/login" class="btn btn-block btn-outline gap-1">
+          <i class="fa-solid fa-comment text-[color:#ffe812]"></i>
+          <span>로그인</span>
+        </a>
+      </form>
+    </div>
+    <div class="bg-white p-10 rounded-lg shadow-md w-96">
+    </div>
+  </div>
+</div>
+
+</html>

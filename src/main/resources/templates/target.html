@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+
+<th:block layout:fragment="head">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script th:src="@{/js/popup.js}"></script>
+    <script th:src="@{/js/todo.js}"></script>
+    <script th:src="@{/js/sortable.js}"></script>
+    <title>PNU LOADMAP</title>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="w-full mx-auto my-4 flex justify-center items-center">
+        <a th:if="${target.parent == null}" th:href="@{/subject/main}"
+           class="w-1/3 text-center bg-primary text-white py-2 rounded-lg text-l transition duration-300 ease-in-out hover:bg-primary-content">
+            메인 화면
+        </a>
+
+        <a th:unless="${target.parent == null}" th:href="@{|/subject/${target.parent.id}|}"
+           class="w-1/3 text-center bg-primary text-white py-2 rounded-lg text-l transition duration-300 ease-in-out hover:bg-primary-content">
+            상위 주제
+        </a>
+    </div>
+
+    <div class="w-9/10 mx-auto bg-white p-6 rounded shadow mb-20">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold"> ✅ Todo List : <span th:text="${target.subject}"></span></h1>
+            <div class="flex items-center">
+                <button class="bg-success text-white ml-4 px-2 py-1 rounded mr-2 text-l flex items-center"
+                        onclick="onDone()">
+                    체크 완료
+                </button>
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/basicList}"></div>
+
+    </div>
+    <div class="fixed bottom-10 left-0 right-0 w-4/5 mx-auto bg-white p-4 rounded-full">
+        <form id="inputForm" th:action="@{|/subject/${target.id}/add|}" method="post"
+              class="flex justify-between items-center">
+            <input id="taskInput" type="text" class="flex-1 p-4 border rounded-l-full" placeholder="할 일 추가하기"
+                   name="taskInput">
+            <a href="javascript:void(0);" onclick="addTask()"
+                    class="bg-primary text-white px-4 py-4 rounded-r-full transition duration-1000 ease-in-out hover:bg-primary-content text-lg">
+                추가
+            </a>
+
+        </form>
+    </div>
+
+    <div th:replace="~{fragments/popup}"></div>
+
+    <form id="requestForm" th:action="@{|/subject/${target.id}/divide|}" method="post" class="hidden">
+        <input type="hidden" name="id">
+    </form>
+
+    <form id="saveForm" th:action="@{|/subject/${target.id}/save|}" method="post">
+        <input type="hidden" name="body">
+    </form>
+
+    <form id="delForm" th:action="@{|/subject/${target.id}/delete|}" method="post" class="hidden">
+        <input type="hidden" name="body">
+    </form>
+
+    <form id="doneForm" th:action="@{/subject/main/done}" method="post" class="hidden">
+        <input type="hidden" name="body">
+    </form>
+
+</div>
+</html>

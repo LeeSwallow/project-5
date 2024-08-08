@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="popup">
+    <div th:if="${requestedId > 0}" id="divideForm">
+
+        <div class="fixed inset-0 flex top-6 items-center justify-center bg-gray-800 bg-opacity-75">
+            <div class="bg-white rounded-lg shadow-lg p-4 w-11/12">
+
+                <h2 class="text-2xl font-bold mb-4">🤖 : "이런 내용들을 공부해야 돼요!"</h2>
+
+
+                <ul id="taskList" class="list-none p-0">
+
+                    <li th:if="${#lists.isEmpty(subjectForms)}" class="text-center p-2 m-2 text-gray-500">
+                        이런.. 아무것도 없네요.
+                    </li>
+
+                    <li th:each="subject: ${subjectForms}"
+                        class="flex flex-col justify-between items-start p-2 bg-gray-100 rounded mb-2 transition duration-1000">
+
+                        <div class="flex justify-between items-center w-full">
+                            <div class="taskItem flex justify-between items-center w-full">
+                                <span class="font-bold" th:text="${subject.subject}">Example Task</span>
+                            </div>
+                            <input class="mr-2" type="checkbox" th:onchange="onSelectSubject(this)">
+                            <input type="hidden" name="no" th:value="${subject.no}">
+                        </div>
+
+
+                        <div class="flex justify-between items-center w-full">
+                            <div class="description mt-2 text-gray-500 ml-4" th:text="${subject.description}"></div>
+                            <span class="ml-2 text-sm text-gray-500 bg-gray-200 rounded-full px-2 py-1"
+                                  th:text="'예상 일: ' + ${subject.expectDate}"></span>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 mx-2 rounded" onclick="onSave()">저장
+                    </button>
+                    <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 mx-2"
+                            onclick="hideDivideForm()">
+                        취소
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="loadingForm" class="hidden">
+        <div class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div class="bg-white rounded-lg shadow-lg px-6 py-10  w-full max-w-md flex flex-col items-center">
+                <h2 class="text-2xl font-bold mb-4">로딩중...</h2>
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="selectForm" class="hidden opacity-0 transition-opacity duration-2000">
+        <div class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div class="bg-white rounded-lg shadow-lg px-6 py-6 w-full max-w-md">
+                <h2 class="text-2xl font-bold mb-4 w-full text-center">세부주제를 추천해 드릴게요</h2>
+                <p class="my-6 text-l w-full text-center">🤖 : "저의 도움을 받으시겠습니까?"</p>
+                <div class="flex justify-around items-center w-full">
+                    <button type="button" class="bg-primary text-white px-6 py-2 rounded shadow-xl"
+                            onclick="confirmYes()">예
+                    </button>
+                    <button type="button" class="bg-primary text-white px-6 py-2 rounded shadow-xl"
+                            onclick="hideSelectForm()">
+                        아니오
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

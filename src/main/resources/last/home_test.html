@@ -1,0 +1,89 @@
+<!-- src/main/resources/templates/home_test.html -->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<th:block layout:fragment="head">
+    <script th:src="@{/js/popup.js}"></script>
+    <script th:src="@{/js/todo.js}"></script>
+    <title>PNU LOADMAP</title>
+</th:block>
+
+
+<div layout:fragment="content">
+
+    <div class="w-9/10 mx-auto bg-white p-6 rounded shadow mb-20">
+
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-xl font-bold">🚩 Todo List</h1>
+            <div class="flex items-center">
+                <select class="bg-gray-300 px-1 py-1 rounded" name="taskSort" onchange="sortTasks(this)">
+                    <option value="priority">최신순</option>
+                    <option value="date">즐겨찾기</option>
+                </select>
+
+                <button class="bg-success text-white ml-4 px-2 py-1 rounded mr-2 text-l flex items-center" onclick="onDelete()">
+                    체크 완료
+                </button>
+            </div>
+        </div>
+
+        <ul id="taskList" class="list-none p-0">
+            <li th:if="${#lists.isEmpty(subjects)}" class="text-center text-gray-500">
+                😄 모든 할 일을 완료했어요!
+            </li>
+
+            <li th:each="subject : ${subjects}"
+                class="flex flex-col justify-between items-start p-2 bg-gray-100 rounded mb-2 transition duration-1000">
+                <div class="taskItem flex justify-between items-center w-full">
+
+                    <input class="mr-2" type="checkbox" onchange="toggleTask(this)">
+                    <span class="font-bold" th:text="${subject.subject}">Example Task</span>
+
+                    <button th:if="${#lists.isEmpty(subject.children)}"
+                            th:onclick="|requestQuery(${subject.id})|"
+                            class="ml-auto bg-primary px-2 py-1 rounded text-white transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
+                        세부과제 생성
+
+                    </button>
+
+                    <a th:unless="${#lists.isEmpty(subject.children)}" th:href="@{|/subject/${subject.id}|}"
+                            class="ml-auto bg-primary-content px-2 py-1 rounded transition duration-300 ease-in-out transform hover:scale-105 hover:bg-primary">
+                        세부과제 보기
+                    </a>
+                </div>
+                <div class="description mt-2 text-gray-500 ml-4" th:text="${subject.description}">This is the
+                    description for Example Task.
+                </div>
+                <input type="hidden" th:value="${subject.id}">
+            </li>
+
+        </ul>
+
+        <div class="fixed bottom-10 left-0 right-0 w-4/5 mx-auto bg-gray-300 p-[1px] rounded-full">
+                <form id="inputForm" th:action="@{/subject/main/add}" method="post" class="flex justify-between items-center">
+                    <input id="taskInput" type="text" class="flex-1 p-4 border rounded-l-full" placeholder="할 일 추가하기" name="taskInput">
+                    <button onclick="addTask()"
+                            class="bg-blue-500 text-white px-4 py-4 rounded-r-full transition duration-1000 ease-in-out hover:bg-blue-700 focus:bg-blue-700 text-lg">
+                        추가
+                    </button>
+                </form>
+        </div>
+        <div th:replace="~{fragments/popup}"></div>
+
+    </div>
+
+    <form id="requestForm" th:action="@{/subject/main/divide}" method="post" class="hidden">
+        <input type="hidden" name="id">
+    </form>
+    <form id="saveForm" th:action="@{/subject/main/save}" method="post" class="hidden">
+        <input type="hidden" name="body">
+    </form>
+
+    <form id="delForm" th:action="@{/subject/main/delete}" method="post" class="hidden">
+        <input type="hidden" name="body">
+    </form>
+
+</div>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="basicList">
+    <ul id="taskList" class="list-none p-0">
+        <li th:if="${#lists.isEmpty(subjects)}" class="text-center text-gray-500">
+            😄 모든 할 일을 완료했어요!
+        </li>
+
+        <li th:each="list : ${subjects}"
+            class="flex flex-col justify-between items-start p-2 bg-gray-100 rounded mb-2 transition duration-1000">
+            <div class="taskItem flex justify-between items-center w-full">
+                <div>
+                    <input class="mr-2" type="checkbox" onchange="toggleDone(this)">
+                    <span class="font-bold" th:text="${list.subject}">Example Task</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center w-full">
+                <div class="description mt-2 text-gray-500 ml-4" th:text="${list.description}">This is the
+                    description for Example Task.
+                </div>
+                <div class="flex items-center bg-gray-200 rounded-full my-1 px-1 py-1 w-1/5">
+                    <label for="expectInput" class="text-sm text-gray-500 px-1 mr-2 w-[50%]" >예상일</label>
+                    <input  id="expectInput" type="text" class="text-sm text-gray-500 bg-gray-200 w-[50%] rounded-full px-2 py-1 text-right" placeholder="완료">
+                </div>
+            </div>
+            <input type="hidden" th:value="${list.id}">
+        </li>
+    </ul>
+</th:block>
+</html>

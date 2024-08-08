@@ -1,0 +1,241 @@
+/* 기본 스타일 설정 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden; /* 가로 스크롤 제거 */
+}
+
+section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+/* Intro 섹션 스타일 */
+#intro {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 전체 화면 높이 */
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.intro-content {
+    text-align: center;
+}
+
+.intro-content h1 {
+    opacity: 0; /* 초기 상태에서 숨기기 */
+    transform: translateY(30px); /* 초기 상태에서 아래로 이동 */
+    transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+    font-size: 3rem;
+}
+
+.intro-content p {
+    opacity: 0; /* 초기 상태에서 숨기기 */
+    transform: translateY(-20px); /* 초기 상태에서 아래로 이동 */
+    transition: opacity 0.5s ease-in-out 2s, transform 0.5s ease-in-out 2s; /* 지연된 애니메이션 */
+    font-size: 1.5rem;
+}
+
+#intro.visible .intro-content h1 {
+    opacity: 1; /* 애니메이션을 통해 텍스트가 보이도록 */
+    transform: translateY(-60px); /* 애니메이션을 통해 원래 위치로 이동 */
+}
+
+#intro.visible .intro-content p {
+    opacity: 1; /* 애니메이션을 통해 텍스트가 보이도록 */
+    transform: translateY(-75px); /* 애니메이션을 통해 원래 위치로 이동 */
+}
+
+/* 트랙 모양의 버튼 스타일 */
+
+#mode-on-off {
+    height: 10;
+}
+
+#toggle-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 55px;
+    height: 20px;
+    background-color: #000000;
+    border-radius: 25px;
+    
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    z-index: 10;
+}
+
+#toggle-button .circle {
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* On 상태일 때 스타일 */
+#toggle-button.on {
+    background-color: #ccc;
+}
+
+#toggle-button.on .circle {
+    transform: translateX(35px);
+}
+
+/* Feature 섹션 스타일 */
+.feature {
+    position: relative;
+    background-color: #fff;
+    padding: 100px 20px; /* 적절한 패딩 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 내용에 따라 높이 자동 조정 */
+}
+
+.feature-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    opacity: 0; /* 초기 상태에서 숨기기 */
+    transform: translateY(50px); /* 초기 상태에서 아래로 이동 */
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+}
+
+.feature-content.visible {
+    opacity: 1; /* 애니메이션을 통해 텍스트가 보이도록 */
+    transform: translateY(0); /* 애니메이션을 통해 원래 위치로 이동 */
+}
+
+.feature-content.left .feature-image {
+    order: 1; /* 이미지가 왼쪽에 위치하도록 */
+    flex: 7; /* 이미지가 전체의 70%를 차지 */
+}
+
+.feature-content.left .feature-description {
+    order: 2; /* 설명이 오른쪽에 위치하도록 */
+    flex: 3; /* 설명이 전체의 30%를 차지 */
+    padding-left: 20px; /* 이미지와 설명 사이의 간격 */
+}
+
+.feature-content.right .feature-image {
+    order: 2; /* 이미지가 오른쪽에 위치하도록 */
+    flex: 7; /* 이미지가 전체의 70%를 차지 */
+}
+
+.feature-content.right .feature-description {
+    order: 1; /* 설명이 왼쪽에 위치하도록 */
+    flex: 3; /* 설명이 전체의 30%를 차지 */
+    padding-right: 20px; /* 이미지와 설명 사이의 간격 */
+}
+
+/* 이미지 스타일 */
+.feature-image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Final 섹션 스타일 */
+#final {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+}
+
+.final-content {
+    text-align: center;
+}
+
+.final-content h1 {
+    opacity: 0; /* 초기 상태에서 숨기기 */
+    transform: translateY(30px); /* 초기 상태에서 아래로 이동 */
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+    font-size: 2.5rem;
+}
+
+#final.visible .final-content h1 {
+    opacity: 1; /* 애니메이션을 통해 텍스트가 보이도록 */
+    transform: translateY(0); /* 애니메이션을 통해 원래 위치로 이동 */
+}
+
+/* Get Started 버튼 스타일 */
+#final .animated-button {
+    opacity: 0; /* 초기 상태에서 숨기기 */
+    transform: translateY(20px); /* 초기 상태에서 아래로 이동 */
+    transition: opacity 1s ease-in-out 1s, transform 1s ease-in-out 1s; /* 지연된 애니메이션 */
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#final.visible .animated-button {
+    opacity: 1; /* 애니메이션을 통해 버튼이 보이도록 */
+    transform: translateY(0); /* 애니메이션을 통해 원래 위치로 이동 */
+}
+
+#final .animated-button:hover {
+    background-color: #11cb21;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        padding: 0 10px;
+    }
+
+    .intro-content h1 {
+        font-size: 2rem;
+    }
+
+    .intro-content p {
+        font-size: 1rem;
+    }
+
+    .feature {
+        padding: 50px 10px;
+        height: 100vh; /* 내용에 맞게 높이 자동 조정 */
+    }
+
+    .feature-content {
+        flex-direction: column; /* 세로 방향으로 배치 */
+        text-align: center;
+    }
+
+    .feature-content.right .feature-image,
+    .feature-content.right .feature-description {
+        order: 0; /* 순서를 기본값으로 재설정 */
+        flex: 1; /* 동일한 비율로 설정 */
+        padding: 0;
+    }
+
+    .feature-image img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .final-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .final-content .animated-button {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
