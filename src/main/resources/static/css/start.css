@@ -54,44 +54,6 @@ section {
 
 /* 트랙 모양의 버튼 스타일 */
 
-#mode-on-off {
-    height: 10;
-}
-
-#toggle-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 55px;
-    height: 20px;
-    background-color: #000000;
-    border-radius: 25px;
-    
-    align-items: center;
-    padding: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    z-index: 10;
-}
-
-#toggle-button .circle {
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    border-radius: 50%;
-    transition: transform 0.3s ease-in-out;
-}
-
-/* On 상태일 때 스타일 */
-#toggle-button.on {
-    background-color: #ccc;
-}
-
-#toggle-button.on .circle {
-    transform: translateX(35px);
-}
-
-/* Feature 섹션 스타일 */
 .feature {
     position: relative;
     background-color: #fff;

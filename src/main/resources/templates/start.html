@@ -6,6 +6,7 @@
     <title>PNU LOAD MAP</title>
     <link rel="stylesheet" th:href="@{/css/start.css}">
     <script th:src="@{/js/start.js}"></script>
+    <link rel="icon"th:href="@{/src/logo.png}"/>
 </head>
 
 <body>
@@ -81,7 +82,7 @@
 <section id="final" class="finalSection">
     <div class="final-content">
         <h1>이제 시작해 볼까요? 🔥 목표 달성을 빕니다!</h1>
-        <button id="get-started" class="animated-button" onclick="redirect()">Get Started</button>
+        <a id="get-started" class="animated-button" th:href="@{/subject/main}">Get Started</a>
     </div>
 </section>
 

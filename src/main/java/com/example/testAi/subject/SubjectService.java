@@ -231,6 +231,10 @@ public class SubjectService {
                     subjectRepository.save(parent);
                     parent = parent.getParent();
                 }
+                if (subject.getParent() != null) {
+                    subject.getParent().getChildren().remove(subject);
+                    subjectRepository.save(subject.getParent());
+                }
                 doneChlidren(subject);
             }
         }

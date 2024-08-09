@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for project-team5-2-spring-sky-1732 on 2024-08-09T02:48:01+09:00
+# fly.toml app configuration file generated for project-team5-2-shy-forest-1496 on 2024-08-09T04:15:51+09:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'project-team5-2-spring-sky-1732'
+app = 'project-team5-2-shy-forest-1496'
 primary_region = 'sin'
 
 [build]
