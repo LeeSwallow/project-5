@@ -12,22 +12,21 @@ spring:
     include: secret
   thymeleaf:
     cache: false
-  h2:
-    console:
-      enabled: true
+
   datasource:
-    url: jdbc:h2:./db_dev;MODE=MySQL  #uri 주소 형식 , local 설치
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:postgresql://localhost:5432/aiwebapp
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    hikari:
+      maximum-pool-size: 4
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   ai:
     openai:
@@ -35,10 +34,7 @@ spring:
         enabled: true
         model: gpt-3.5-turbo
 
-  jwt:
-    expiration: 86400000
-
-  #kakao start
+          #kakao start
   output:
     ansi:
       enabled: always

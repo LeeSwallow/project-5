@@ -19,12 +19,16 @@ public class Subject {
     private Long id;
     private int priority;
 
+    @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @Column(name = "expired_date")
     private int expiredDate;
 
     private Integer depth;
 
     @ManyToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Column(length = 200)
@@ -33,12 +37,16 @@ public class Subject {
 
     // Tree 구조를 위한 필드
     @ManyToOne
+    @JoinColumn(name = "parent_id")
     private Subject parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
     List<Subject> children;
 
+    @Column(name = "is_done")
     private boolean isDone;
+    @Column(name = "is_divide")
     private boolean isDivide;
+    @Column(name = "is_favorite")
     private boolean isFavorite;
 }

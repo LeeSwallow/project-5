@@ -1,5 +1,6 @@
 package com.example.testAi.user.global.jpa.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
@@ -17,8 +18,11 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseTime extends BaseEntity {
     @CreatedDate
+    @Column(name="create_date", updatable = false)
     private LocalDateTime createDate;
+
     @LastModifiedDate
+    @Column(name="modify_date")
     private LocalDateTime modifyDate;
 
     public void setModified() {

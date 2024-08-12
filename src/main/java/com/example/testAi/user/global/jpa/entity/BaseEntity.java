@@ -12,6 +12,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class BaseEntity {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include

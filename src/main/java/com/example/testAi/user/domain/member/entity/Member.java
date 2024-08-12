@@ -27,6 +27,8 @@ public class Member extends BaseTime {
     private String nickname;
     @Column(unique = true)
     private String email;
+
+    @Column(name = "profile_img_url")
     private String profileImgUrl;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
