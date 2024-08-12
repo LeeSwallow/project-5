@@ -26,6 +26,9 @@ public class MainController {
         return "redirect:/subject/main";
     }
 
-    @GetMapping("/login/sucess")
-    public String sucess() { return "redirect:/subject/main"; }
+    @GetMapping("/login/success")
+    public String success() { return "redirect:/subject/main"; }
+
+    @GetMapping("/member/login/success")
+    public String memberSuccess() { return "redirect:/subject/main"; }
 }

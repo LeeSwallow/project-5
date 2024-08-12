@@ -2,7 +2,8 @@
 <th:block th:fragment="subjectTree(lists, depth)">
     <ul class="list-none p-0">
         <th:block th:each="list : ${lists}">
-            <li th:classappend="'ml-' + (${depth} * 8)"
+            <li th:unless="${list.isDone}"
+                th:classappend="'ml-' + (${depth} * 8)"
                 class="relative flex flex-col justify-between items-start p-2 bg-gray-100 rounded mb-2 transition duration-1000">
                 <div class="taskItem flex justify-between items-center w-full">
                     <div>
